@@ -31,6 +31,9 @@ function animate() {
     window.requestAnimationFrame(animate)
 
     backgroundLevel1.draw()
+    collisionBlocks.forEach(collisionBlock => {
+        collisionBlock.draw()
+    })
     player.velocity.x = 0
     if (keys.ArrowRigth.pressed) player.velocity.x = 5
     else if (keys.ArrowLeft.pressed) player.velocity.x = -5
