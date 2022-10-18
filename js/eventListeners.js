@@ -1,27 +1,80 @@
-// aggiungo la tastiera al gioco
+// // aggiungo la tastiera al gioco
+// window.addEventListener('keydown', (event) => {
+//     switch (event.key) {
+//         case 'ArrowUp':
+//             if ( player.velocity.y === 0) player.velocity.y = -20
+//         break
+//         case 'ArrowLeft':
+//             keys.ArrowLeft.pressed = true
+//         break
+//         case 'ArrowRight':
+//             keys.ArrowRigth.pressed = true
+//         break
+//     }
+
+// })
+
+// window.addEventListener('keyup', (event) => {
+//     switch (event.key) {
+//         case 'ArrowLeft':
+//             keys.ArrowLeft.pressed = false
+//         break
+//         case 'ArrowRight':
+//             keys.ArrowRigth.pressed = false
+//         break
+//     }
+
+// })
+
+//--------------------------------------------------------------------------------------------------------------
+
 window.addEventListener('keydown', (event) => {
+    if (player.preventInput) return
     switch (event.key) {
-        case 'ArrowUp':
-            if ( player.velocity.y === 0) player.velocity.y = -20
+      case 'w':
+        for (let i = 0; i < doors.length; i++) {
+          const door = doors[i]
+  
+          if (
+            player.hitbox.position.x + player.hitbox.width <=
+              door.position.x + door.width &&
+            player.hitbox.position.x >= door.position.x &&
+            player.hitbox.position.y + player.hitbox.height >= door.position.y &&
+            player.hitbox.position.y <= door.position.y + door.height
+          ) {
+            player.velocity.x = 0
+            player.velocity.y = 0
+            player.preventInput = true
+            player.switchSprite('enterDoor')
+            door.play()
+            return
+          }
+        }
+        if (player.velocity.y === 0) player.velocity.y = -25
+  
         break
-        case 'ArrowLeft':
-            keys.ArrowLeft.pressed = true
+      case 'a':
+        // move player to the left
+        keys.a.pressed = true
         break
-        case 'ArrowRight':
-            keys.ArrowRigth.pressed = true
+      case 'd':
+        // move player to the right
+        keys.d.pressed = true
         break
     }
-
-})
-
-window.addEventListener('keyup', (event) => {
+  })
+  
+  window.addEventListener('keyup', (event) => {
     switch (event.key) {
-        case 'ArrowLeft':
-            keys.ArrowLeft.pressed = false
+      case 'a':
+        // move player to the left
+        keys.a.pressed = false
+  
         break
-        case 'ArrowRight':
-            keys.ArrowRigth.pressed = false
+      case 'd':
+        // move player to the right
+        keys.d.pressed = false
+  
         break
     }
-
-})
+  })
