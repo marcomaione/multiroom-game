@@ -6,6 +6,13 @@ const c = canvas.getContext('2d')
 canvas.width = 1024
 canvas.height = 576
 
+const backgroundLevel1 = new Sprite({
+    position: {
+        x: 0,
+        y: 0,
+    },
+    imageSrc: 'img/backgroundLevel1.png'
+})
 const player = new Player()
 const keys = {
     ArrowUp : {
@@ -22,45 +29,16 @@ const keys = {
 
 function animate() {
     window.requestAnimationFrame(animate)
-    // do il colore al canvas
-    c.fillStyle = 'white'
-    c.fillRect(0, 0, canvas.width, canvas.height)
+
+    backgroundLevel1.draw()
     player.velocity.x = 0
-    if (keys.ArrowRigth.pressed) {
-        player.velocity.x = 5
-    }else if (keys.ArrowLeft.pressed) {
-        player.velocity.x = -5
-    }
+    if (keys.ArrowRigth.pressed) player.velocity.x = 5
+    else if (keys.ArrowLeft.pressed) player.velocity.x = -5
+
     player.draw()
     player.update()
-    
+        
 }
+    
 animate()
 
-// aggiungo la tastiera al gioco
-window.addEventListener('keydown', (event) => {
-    switch (event.key) {
-        case 'ArrowUp':
-            if ( player.velocity.y === 0) player.velocity.y = -20
-        break
-        case 'ArrowLeft':
-            keys.ArrowLeft.pressed = true
-        break
-        case 'ArrowRight':
-            keys.ArrowRigth.pressed = true
-        break
-    }
-
-})
-
-window.addEventListener('keyup', (event) => {
-    switch (event.key) {
-        case 'ArrowLeft':
-            keys.ArrowLeft.pressed = false
-        break
-        case 'ArrowRight':
-            keys.ArrowRigth.pressed = false
-        break
-    }
-
-})
